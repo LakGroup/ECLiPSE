@@ -5,7 +5,9 @@ The current version of the ECLiPSE software (May 08, 2023) to automatically desc
 This version only contains scripts/functions to do the analysis, but a GUI version of ECLiPSE is being prepared to provide a user-friendly experience. We also plan to add classification of 3D localizations in the future!
 
 ## System requirements
-The files were tested in MATLAB R2022b (The MathWorks, USA), on a i7-12700H 2.30 GHz (32 GB RAM) laptop running Windows 64-bit. No errors were encountered (only some warnings sometimes related to the polyshape function of MATLAB, but these can safely be ignored). The code was not tested in another version of MATLAB, but should be working in any version of MATLAB where the polyshape.m function exists (i.e., MATLAB R2017b or newer).
+The files were tested in MATLAB R2022b (The MathWorks, USA), on a i7-12700H 2.30 GHz (32 GB RAM) laptop running Windows 64-bit. No errors were encountered (only some warnings sometimes related to the polyshape function of MATLAB, but these can safely be ignored). 
+
+The code was not tested in another version of MATLAB, but should be working in any version of MATLAB where the polyshape.m function exists (i.e., MATLAB R2017b or newer).
 
 We are aware that in very rare cases (<0.001% of the tested data), a small bug shows up where the software gets stuck in a loop while calculating the descriptors for the clusters. You should notice this by the waitbar that does not advance (Note: for clusters with sizes > 1μm, it may take a few seconds to calculate the descriptors. These are not to be confused with the small bug in the calculations).
 

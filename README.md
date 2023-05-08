@@ -24,6 +24,7 @@ A typical "installation" should not take you longer than a minute.
 The run time on a i7-12700H 2.30 GHz (32 GB RAM) laptop with Windows 64-bit is ~50 minutes. This is to classify the example data that is included in this software (500 clusters of 5 different biological structures).
 
 **To take full advantage of the available algorithms implemented in this software, please install the PLS Toolbox (www.eigenvector.com). A free 45-days trial is available using an academic email address during signup. We refer to their website for help on the installation of that toolbox.**
+
 If the PLS toolbox is not installed, the software can still be used (with less capabilities). See the User Guide for more information.
 
 ## More information

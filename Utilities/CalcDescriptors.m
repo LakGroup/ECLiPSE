@@ -16,7 +16,7 @@ function DescriptorsTable = CalcDescriptors(Data)
 %
 % Output:
 %   DescriptorsTable:   A table containing all the calculated descriptors.
-%                       Its size will be N x 63
+%                       Its size will be N x 67
 % -------------------------------------------------------------------------
 % Code written by:
 %   Siewert Hugelier    Lakadamyali lab, University of Pennsylvania (USA)

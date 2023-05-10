@@ -40,7 +40,11 @@ function VarSelModel = VariableSelection(Data,Class,Method)
 %   siewert.hugelier@pennmedicine.upenn.edu
 %   melike.lakadamyali@pennmedicine.upenn.edu
 % If used, please cite:
-%   xxx
+%   Hugelier, S., Kim, H., Gyparaki, M.T., Bond, C., Tang, Q., 
+%   Santiago-Ruiz, A.N., Porta, S., Lakadamyali, M. ECLiPSE: a versatile 
+%   classification technique for structural and morphological analysis of 
+%   super-resolution microscopy data. BioRxiv (2023). 
+%   DOI: https://doi.org/10.1101/2023.05.10.540077.
 % -------------------------------------------------------------------------
 
 % Update the path to make sure the PLS toolbox is in the appropriate

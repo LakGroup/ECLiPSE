@@ -34,4 +34,4 @@ If the PLS toolbox is not installed, the software can still be used (with less c
 ## More information
 We refer to the User Guide for more information on the different steps of the software.
 
-Please refer to: Hugelier et al. BioRxiv 2023 for more information about this work: DOI: .
+Please refer to: Hugelier et al. BioRxiv 2023 for more information about this work: DOI: https://doi.org/10.1101/2023.05.10.540077.

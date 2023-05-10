@@ -299,8 +299,6 @@ Prediction_RF = zeros((min(CountsClasses)*numel(CountsClasses))-TrainClassSize*n
 VS_Prediction_RF = zeros((min(CountsClasses)*numel(CountsClasses))-TrainClassSize*numel(CountsClasses),ClassReps);
 Prediction_LRegDA = zeros((min(CountsClasses)*numel(CountsClasses))-TrainClassSize*numel(CountsClasses),ClassReps);
 VS_Prediction_LRegDA = zeros((min(CountsClasses)*numel(CountsClasses))-TrainClassSize*numel(CountsClasses),ClassReps);
-Prediction_Kmeans = zeros((min(CountsClasses)*numel(CountsClasses))-TrainClassSize*numel(CountsClasses),ClassReps);
-VS_Prediction_Kmeans = zeros((min(CountsClasses)*numel(CountsClasses))-TrainClassSize*numel(CountsClasses),ClassReps);
 
 Model_KNN = cell(ClassReps,1);
 VS_Model_KNN = cell(ClassReps,1);
@@ -384,7 +382,7 @@ disp(['Section 7 finished. Time elapsed: ' num2str(toc(t1)/60) ' minutes'])
 % Clean up the Workspace
 clear ClassReps TrainFraction CountsClasses TrainClassSize i Model
 
-%% Section 8: Showing the results and 
+%% Section 8: Plot the classification results
 % This section takes 6.3 mins on an i7-12700H 2.30GHz Windows 10 system %
 
 % Start the timer

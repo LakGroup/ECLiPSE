@@ -33,8 +33,6 @@ function DescriptorsTable = CalcDescriptors(Data)
 % The used values here worked well for the applications in the paper, but
 % this may depend on the size of the data clusters.
 UpscaleFactor = 10; % Upscale the coordinates to preserve details.
-PadFactor = 3; % Number of pixels to pad the grayscale image.
-DilationFactor = 1; % Degree to which dilation/erosion should occur.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Turn warnings off, to not flood the command window
@@ -182,7 +180,7 @@ for i = 1:N
     [FractProperties, SkelProperties] = ImageProperties(ImageTransforms); % Calculate the different properties from the previously obtained images.
 
     % Grayscale image transforms and their properties.
-    [~,GrayscaleProperties] = MakeGrayscaleImage(RotatedCluster, UpscaleFactor, PadFactor, DilationFactor);
+    [~,GrayscaleProperties] = MakeGrayscaleImage(RotatedCluster, UpscaleFactor);
 
     % Calculate central moments: scale invariants and rotation invariants.
     % Scale invariants are used in the Ellipse calculations.

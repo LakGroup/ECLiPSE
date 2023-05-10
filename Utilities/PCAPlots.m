@@ -23,6 +23,8 @@ function PCAPlots(Data,Class,D2orD3,varargin)
 %                       Its size should be m x 1 (m: number of samples).
 %   D2orD3:         2-dimensional or 3-dimensional PCA plot of the data.
 %                       It is specified as: '2D' or '3D'
+%
+% Optional input:
 %   AutoScale:      Select whether or not the data has to be autoscaled
 %                   before doing the PCA.
 %   SaveAs:         The save name. The figure will be saved as .png and 

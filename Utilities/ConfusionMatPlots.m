@@ -1,4 +1,65 @@
 function [ConfusionMat,SumDiags,BestModelIndex] = ConfusionMatPlots(Predicted,GroundTruth,varargin)
+% -------------------------------------------------------------------------
+% Function that calculates and optionally plots the confusion matrix of the
+% classification results.
+% Examples on how to use it:
+%   ConfusionMatPlots(Predicted,GroundTruth);
+%   [ConfusionMat,SumDiags,BestModelIndex] = ConfusionMatPlots( ...
+%       Predicted,GroundTruth,SaveAs='path\to\save\',Plot=1, ...
+%       FullScreen=1,Title='TitleOfPlot',Labels={'Label1','Label2'}, ...
+%       BestNumModels=10,OnlyBestModels=0);
+% Please note that the syntax on how to specify option input has changed
+% since Matlab 2021a. Example of before Matlab 2021a:
+%   ConfusionMatPlots(Predicted,GroundTruth,'SaveAs','path\to\save\', ...
+%       'Plot',1);
+% -------------------------------------------------------------------------
+% Input:
+%   Predicted:      A matrix containing the predicted class associations.
+%                   Its size will be m x n (m: number of samples, n: number
+%                   of models).
+%   GroundTruth:    A matrix containing the ground truth class for each
+%                   sample.
+%                   Its size will be m x n (m: number of samples, n: number
+%                   of models).
+%
+% Optional input:
+%   SaveAs:             The path to save the images in. The figure will be 
+%                       saved as .png and as .fig. If none is specified, 
+%                       the figure will not save.
+%   Plot:               Whether or not the confusion matrices just have to
+%                       be calculated (0) or also plotted (1). Default: 1.
+%   FullScreen:         Fullscreen (1) figure or not (0). Specified as a 
+%                       scalar. Default: 0.
+%   Title:              The title of the plot. Provided as a char. Default:
+%                       [];
+%   Labels:             The labels of the individual classes. Default: [].
+%   BestNumModels:      Whether or not the best models (based on the
+%                       average prediction accuracy) have to be calculated
+%                       and/or plotted. Provided as a scalar. Default: 0 
+%                       (no calculation).
+%   BestNumModelsIdx:   The indices of the best models. Provided as a
+%                       vector. Default: [].
+%   OnlyBestModels:     Only plot the best models. Provided as a scalar.
+%                       Default: 0.
+%
+% Output:
+%   Confusionmat:   The confusion matrices for each of the models
+%                   individually. Its size will be (C x C x n; C: number of
+%                   classes, n: number of models).
+%   SumDiags:       The average prediction accuracy for each model. Its
+%                   size will be (n x 1; n: number of models).
+%   BestModelIndex: The indices of the best models. Its size will be (s x
+%                   1; s: number of best models provided in
+%                   'BestNumModels').
+% -------------------------------------------------------------------------
+% Code written by:
+%   Siewert Hugelier    Lakadamyali lab, University of Pennsylvania (USA)
+% Contact:
+%   siewert.hugelier@pennmedicine.upenn.edu
+%   melike.lakadamyali@pennmedicine.upenn.edu
+% If used, please cite:
+%   xxx
+% -------------------------------------------------------------------------
 
 % Set default values if not specified in the input.
 DefaultSave = [];

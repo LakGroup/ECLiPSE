@@ -17,6 +17,8 @@ function HistogramPlots(Data,Class,varargin)
 %                   of variables).
 %   Class:          A vector containing the class relationship of each
 %                   sample. Its size is m x 1 (m: number of samples).
+%
+% Optional Input:
 %   SaveAs:         The path to save the images in. The figure will be 
 %                   saved as .png. If none is specified, the figure will 
 %                   not save.

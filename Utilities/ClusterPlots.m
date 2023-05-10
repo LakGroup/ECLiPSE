@@ -1,6 +1,6 @@
 function ClusterPlots(Clusters,varargin)
 % -------------------------------------------------------------------------
-% Function that plots the clusters.
+% Function that plots the individual clusters.
 % Examples on how to use it:
 %   ClusterPlots(Clusters);
 %   ClusterPlots(Clusters,SaveAs='path\to\save\',PlotConfig=[4 5], ...
@@ -14,6 +14,7 @@ function ClusterPlots(Clusters,varargin)
 %                   size n x 1
 %                       Inside each cell, there should be a matrix with at
 %                       least 2 columns (first column: x, second column: y)
+% Optional Input:
 %   SaveAs:         The path to save the images in. The figure will be 
 %                   saved as .png. If none is specified, the figure will 
 %                   not save.

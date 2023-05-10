@@ -1,13 +1,24 @@
 function Prediction = ClassificationPrediction(Data,Model,Method,varargin)
 % -------------------------------------------------------------------------
-% 
+% Function that predicts the class association of each sample based on an
+% already existing model. The data should be provided in the same way as
+% the model or compatibility issues will arise (e.g., same preprocessing).
+% Examples on how to use it:
+%   Prediction = ClassificationPrediction(Data,Model_knn,'knn');
+%   Prediction = ClassificationPrediction(Data,Model_LRegDA,'LReg-DA', ...
+%       Options=Options_LRegDA);
+%   Prediction = ClassificationPrediction(Data,Model_Kmeans,'Kmeans', ...
+%       DoPCA=1,nComp=5);
+% Please note that the syntax on how to specify option input has changed
+% since Matlab 2021a. Example of before Matlab 2021a:
+%   Prediction = ClassificationPrediction(Data,Model_Kmeans,'Kmeans',...
+%       'DoPCA',1,'nComp',5);
 % -------------------------------------------------------------------------
 % Input:
 %   Data:   The X-block of the data (the descriptors)
 %               Its size will be m x n (m: number of samples; n: variables)
-%   Class:  The Y-block of the data (the classes)
-%               Its size will be m x 1 (m: number of samples)
-%   Method: The variable selection method
+%   Model:  The model of the trained classification method
+%   Method: The classification method
 %           Choices:    'knn' (k-nearest neighbours classification from the Statistics & Machine Learning Toolbox; The MathWorks Inc.)
 %                       'RandomForest' (Random Forest classification from the Statistics & Machine Learning Toolbox; The MathWorks Inc.)
 %                       'PLS-DA' (PLS-Discriminant Analysis from the PLS Toolbox; Eigenvector Inc.)
@@ -19,9 +30,16 @@ function Prediction = ClassificationPrediction(Data,Model,Method,varargin)
 %                       'HCA' (Hierarchical Cluster analysis for unsupervised classification from the PLS Toolbox; Eigenvector Inc.)
 %                       'Kmeans' (k-means clustering for unsupervised classification from the Statistics & Machine Learning Toolbox; The MathWorks Inc.)
 %
+% Optional input:
+%   Options:    Options for 'PLS-DA' and 'LReg-DA' that can be provided.
+%               See 'help lregda' or 'help plsda' for more information
+%   DoPCA:      Do PCA before using KMeans or not (1/0 default: 1)
+%   nComp:      The number of components to do the PCA with (only Kmeans).
+%               Default: 5.
+%
 % Output:
-%   Prediction: A structure containing different variables depending on
-%               the variable selection method used.
+%   Prediction: A column vector (m x 1) containing the class predictions of
+%               the unknown samples.
 % -------------------------------------------------------------------------
 % Code written by:
 %   Siewert Hugelier    Lakadamyali lab, University of Pennsylvania (USA)

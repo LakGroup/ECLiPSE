@@ -37,7 +37,6 @@ CoordinateImage = Image.Logical; % Logical image of the coordinates.
 BoundaryImage = Image.Boundary; % Image of the boundary pixels.
 EuclideanDistImage = Image.EucDist; % Euclidean distance image.
 SkeletonImage = Image.Skeleton; % Skeletonized image.
-BranchPointImage = Image.BranchPoint; % Branch points of the skeleton.
 Scale = mean(Image.Scale); % The conversion of pixels in the new images to size in the original image. The size may be different for x and y because of rounding errors.
 
 % Extract the individual lines/branches from the skeleton image.

@@ -1,6 +1,19 @@
 function ClassificationModel = ClassificationTrain(Data,Class,Method,varargin)
 % -------------------------------------------------------------------------
-% 
+% Function that trains the classification models based on data training
+% that is provided. The Class vector associated to it is different for
+% supervised (vector of class associations per sample) and unsupervised (a
+% scalar representing the number of classes) methods.
+% Examples on how to use it:
+%   ClassificationModel = ClassificationTrain(Data,Class,'knn');
+%   ClassificationModel = ClassificationTrain(Data,Class,'LReg-DA', ...
+%       Options=Options_LRegDA);
+%   ClassificationModel = ClassificationTrain(Data,Class,'Kmeans', ...
+%       DoPCA=1,nComp=5);
+% Please note that the syntax on how to specify option input has changed
+% since Matlab 2021a. Example of before Matlab 2021a:
+%   ClassificationModel = ClassificationTrain(Data,Class,'Kmeans',...
+%       'DoPCA',1,'nComp',5);
 % -------------------------------------------------------------------------
 % Input:
 %   Data:   The X-block of the data (the descriptors)
@@ -22,9 +35,36 @@ function ClassificationModel = ClassificationTrain(Data,Class,Method,varargin)
 %                       'HCA' (Hierarchical Cluster analysis for unsupervised classification from the PLS Toolbox; Eigenvector Inc.)
 %                       'Kmeans' (k-means clustering for unsupervised classification from the Statistics & Machine Learning Toolbox; The MathWorks Inc.)
 %
+% Optional input:
+%   knn_Neighbours: The number of neighbours considered in the knn model.
+%                   See 'help fitcknn' for more information.
+%   knn_Distance:   The distance metric considered in the knn model. See
+%                   'help fitcknn' for more information on the available
+%                   options.
+%   RF_Trees:       The number of trees used in the Random Forest model.
+%                   See 'help TreeBagger' for more information.
+%   Options:        Options for 'PLS-DA', 'LReg-DA', and 'HCA' that can be 
+%                   provided. See 'help lregda' or 'help plsda' for more 
+%                   information.
+%   DoPCA:          Do PCA before using KMeans or not (1/0 default: 1)
+%   nComp:          The number of components to do the PCA with (only 
+%                   Kmeans). Default: 5.
+%   Learner:        The learner provided for the 'AdaBoostM1',
+%                   'AdaBoostM2', 'RUSBoost', and 'LogitBoost' 
+%                   classification methods. See 'help fitcensemble' for
+%                   more information.
+%   NumLearningCycles:  The number of cycles used in the learning process
+%                       for 'AdaBoostM1', 'AdaBoostM2', 'RUSBoost', and 
+%                       'LogitBoost' classification methods. See 'help
+%                       fitcensemble' for more information. Dfault: 1000.e
+%   RatioToSmallest:    Sampling portion for 'RUSBoost'. See 'help
+%                       fitcensemble' for more information. Default: 1 for
+%                       each class.
+%
 % Output:
-%   VarSelModel:    A structure containing different variables depending on
-%                   the variable selection method used.
+%   ClassificationModel:    A structure containing the classification
+%                           model. The contents will depend on the
+%                           classification method.
 % -------------------------------------------------------------------------
 % Code written by:
 %   Siewert Hugelier    Lakadamyali lab, University of Pennsylvania (USA)
@@ -40,9 +80,9 @@ Defaultknn_Neighbours = 0;
 Defaultknn_Distance = 'seuclidean';
 DefaultRF_Trees = 100;
 DefaultOptions = [];
-DefaultLearner = [];
 DefaultDoPCA = 1;
 DefaultnComp = 5;
+DefaultLearner = [];
 DefaultNumLearningCycles = 0;
 DefaultRatioToSmallest = [];
 
@@ -56,9 +96,9 @@ addOptional(p,'knn_Neighbours',Defaultknn_Neighbours,validScalar1);
 addOptional(p,'knn_Distance',Defaultknn_Distance,@ischar);
 addOptional(p,'RF_Trees',DefaultRF_Trees,validScalar1);
 addOptional(p,'Options',DefaultOptions);
-addOptional(p,'Learner',DefaultLearner);
 addOptional(p,'DoPCA',DefaultDoPCA);
 addOptional(p,'nComp',DefaultnComp);
+addOptional(p,'Learner',DefaultLearner);
 addOptional(p,'NumLearningCycles',DefaultNumLearningCycles);
 addOptional(p,'RatioToSmallest',DefaultRatioToSmallest);
 parse(p,Data,Class,Method,varargin{:});

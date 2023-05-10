@@ -5,7 +5,7 @@ function [TrainData,TrainClass,TestData,TestClass] = CreateTrainData(Data,Class,
 % specified size (x number of classes) of the data will be selected as
 % output.
 % Examples on how to use it:
-%   [TrainingData,Training_GT] = CreateTrainData(Data_PreProcessed,GroundTruth,ClassSize=250);
+%   [TrainingData,Training_GT] = CreateTrainData(Data_PreProcessed,GroundTruth,ClassSize=[0.7 0.5]);
 %   [TrainingData,Training_GT,ValidationData,ValidationClass] = CreateTrainData(Data_PreProcessed,GroundTruth,ClassSize=250,NeedTestData=1);
 % -------------------------------------------------------------------------
 % Input:
@@ -14,6 +14,8 @@ function [TrainData,TrainClass,TestData,TestClass] = CreateTrainData(Data,Class,
 %                       variables)
 %   Class:          The Y-block of the data (the classes)
 %                       Its size will be m x 1 (m: number of samples)
+%
+% Optional input:
 %   ClassSize:      The number of samples per class in the training data
 %   NeedTestData:   Whether or not test/validation data is needed.
 %                   This is included in this function to make it

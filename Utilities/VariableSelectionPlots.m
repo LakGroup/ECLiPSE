@@ -1,4 +1,4 @@
-function VariablesSelected = VariableSelectionPlots(Model,Threshold,VariableNames,SaveAs)
+function VariablesSelected = VariableSelectionPlots(Model,varargin)
 % -------------------------------------------------------------------------
 % Function that visualizes the results obtained from the automatic variable
 % selection routine. The point of this routine is to visualize the selected
@@ -7,14 +7,22 @@ function VariablesSelected = VariableSelectionPlots(Model,Threshold,VariableName
 % variable selection routine (different methods work differently and they
 % cannot be treated the same).
 % Examples on how to use it:
-%   SelectedVariables = VariableSelectionPlots(bipls_model,0.6)
 %   SelectedVariables = VariableSelectionPlots(Boruta_model)
+%   SelectedVariables = VariableSelectionPlots(bipls_model,...
+%       Threshold=0.6,VariableNames=VarNames,... 
+%       SaveAs='path\to\save\image.png');
+% Please note that the syntax on how to specify option input has changed
+% since Matlab 2021a. Example of before Matlab 2021a:
+%   SelectedVariables = VariableSelectionPlots(bipls_model,'Threshold',...
+%       0.6,'VariableNames',VarNames,'SaveAs','path\to\save\image.png');
 % -------------------------------------------------------------------------
 % Input:
 %   Model:          The model of the variable selection routine
 %                       This will be a structure containing three fields 
 %                       (model for individual run; selected variables for 
 %                       indidivual runs; method used)
+%
+% Optional input:
 %   Threshold:      An optional parameter to change the threshold (default:
 %                   0.5)
 %   VariableNames:  An optional parameter containing the names of the
@@ -34,28 +42,34 @@ function VariablesSelected = VariableSelectionPlots(Model,Threshold,VariableName
 %   xxx
 % -------------------------------------------------------------------------
 
-% Set the default option for the threshold if it is not provided.
-if nargin < 2 || isempty(Threshold)
-    Threshold = 0.5;
-end
+% Set default values if not specified in the input.
+DefaultThreshold = 0.5;
+DefaultSaveAs = [];
+DefaultVariableNames = [];
+
+% Parse the input
+p = inputParser;
+validScalar1 = @(x) isnumeric(x) && isscalar(x) && ~(x < 0) && ~(x > 1);
+addRequired(p,'Model',@iscell);
+addOptional(p,'Threshold',DefaultThreshold,validScalar1);
+addOptional(p,'SaveAs',DefaultSaveAs,@ischar);
+addOptional(p,'VariableNames',DefaultVariableNames,@iscell);
+
+parse(p,Model,Threshold,D2orD3,varargin{:});
+
+Model = p.Results.Model;
+Threshold = p.Results.Threshold;
+SaveAs = p.Results.SaveAs;
+VariableNames = p.Results.VariableNames;
 
 % Set the default option for the variable names if it is not provided.
-if nargin < 3
+if isempty(VariableNames)
     VariableNames = num2cell(1:size(Model{1}.VarSel));
-end
-
-if nargin < 4
-    SaveAs = [];
 end
 
 % Check if the input Data is in the correct format.
 if ~iscell(Model) || size(Model,2) ~= 1
     error("The input Model should be specified as a cell (m x 1: m = number of samples).")
-end
-
-% Check if the input Class is in the correct format.
-if ~isscalar(Threshold) || Threshold < 0 || Threshold > 1
-    error("The Threshold should be a scalar between 0-1 (both included).")
 end
 
 % Check if all provided individual models are the same ones.

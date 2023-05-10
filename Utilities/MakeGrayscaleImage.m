@@ -1,10 +1,10 @@
-function [GrayscaleImage,GrayscaleProperties] = MakeGrayscaleImage(DataCloud, UpscaleFactor, PadFactor, DilationFactor)
+function [GrayscaleImage,GrayscaleProperties] = MakeGrayscaleImage(DataCloud, UpscaleFactor)
 % -------------------------------------------------------------------------
 % Function that makes a grayscale image from a data point cloud. It uses an
 % upscale factor to supersample the pixelized image to get more accurate
 % representations of the point cloud (continuous coordinates).
 % Examples on how to use it:
-%   [~,GrayscaleProperties] = MakeGrayscaleImage(PointCloud, 10, 3, 1);
+%   [~,GrayscaleProperties] = MakeGrayscaleImage(PointCloud, 10);
 % -------------------------------------------------------------------------
 % Input:
 %   DataCloud:      The data cloud of which the grayscale image should be 
@@ -12,10 +12,6 @@ function [GrayscaleImage,GrayscaleProperties] = MakeGrayscaleImage(DataCloud, Up
 %                   (x,y) coordinates in column 1 (x) and column 2 (y).
 %   UpscaleFactor:  The factor with which the coordinates should be
 %                   upscales to preserve details in the gray scale image.
-%   Padfactor:      The factor with which the grayscale image should be
-%                   padded before perfoming image transformation.
-%   DilationFactor: The factor with which the grayscale image will be
-%                   eroded and dilated to preserve details in its shapes.
 %
 % Output:
 %   GrayscaleImage:         The grayscale image of the data cloud. This 
@@ -38,8 +34,8 @@ if size(DataCloud,2) > 2 || size(DataCloud,2) == 1
     error("The data matrix input should be specified as a 2-column matrix.")
 end
 
-if numel(UpscaleFactor) ~= 1 || numel(PadFactor) ~= 1 || numel(DilationFactor) ~= 1
-    error("The upscale factor, padding factor and dilation factor should be provided as a number.")
+if numel(UpscaleFactor) ~= 1 
+    error("The upscale factor should be provided as a number.")
 end
 
 % Upscale the data. This will spread out coordinates within the same pixel
@@ -59,16 +55,16 @@ Pixel_idx = sub2ind([ydim xdim], floor(DataCloud(:,2)-miny+1),floor(DataCloud(:,
 LogicalMask = false([ydim xdim]); % Make an empty logical mask of the coordinates.
 LogicalMask(Pixel_idx) = 1; % Set the data cloud coordinates to 1.
 
-LogicalMask = padarray(LogicalMask, [PadFactor PadFactor], 0, 'both'); % Pad the image to not affect the dilation/erosion.
-LogicalMask = imdilate(LogicalMask,strel('disk',DilationFactor)); % Dilate the image to fill holes (& remove single pixels).
-LogicalMask = imerode(LogicalMask,strel('disk',DilationFactor)); % Erode the image to remove the excess area pixels.
+LogicalMask = padarray(LogicalMask, [3 3], 0, 'both'); % Pad the image to not affect the dilation/erosion.
+LogicalMask = imdilate(LogicalMask,strel('disk',1)); % Dilate the image to fill holes (& remove single pixels).
+LogicalMask = imerode(LogicalMask,strel('disk',1)); % Erode the image to remove the excess area pixels.
 
 % Make the actual grayscale image by using the 3D histogram function and
 % then smoothing out the outliers (they can be due to artefacts etc.).
 GrayscaleImage = hist3(DataCloud, [xdim ydim])';
-GrayscaleImage = padarray(GrayscaleImage, [PadFactor PadFactor], 0, 'both'); % Pad the image to not affect the dilation/erosion.
-GrayscaleImage = imdilate(GrayscaleImage,strel('disk',DilationFactor)); % Dilate the image to fill holes (& remove single pixels).
-GrayscaleImage = imerode(GrayscaleImage,strel('disk',DilationFactor)); % Erode the image to remove the excess area pixels.
+GrayscaleImage = padarray(GrayscaleImage, [3 3], 0, 'both'); % Pad the image to not affect the dilation/erosion.
+GrayscaleImage = imdilate(GrayscaleImage,strel('disk',1)); % Dilate the image to fill holes (& remove single pixels).
+GrayscaleImage = imerode(GrayscaleImage,strel('disk',1)); % Erode the image to remove the excess area pixels.
 
 UniqueIntensities = unique(GrayscaleImage(:)); % Get the unique intensity values of the grayscale image.
 Outliers = UniqueIntensities(isoutlier(UniqueIntensities,'quartiles')); % Determine whether or not there are any otuliers in these values.
@@ -85,7 +81,7 @@ end
 % image transformations, then crop the image again to its original
 % dimensions.
 GrayscaleImage = GrayscaleImage .* LogicalMask; % Multiply the grayscale image with the logical image.
-GrayscaleImage = GrayscaleImage(PadFactor+1:end-PadFactor,PadFactor+1:end-PadFactor); % Remove the padding from the image.
+GrayscaleImage = GrayscaleImage(3+1:end-3,3+1:end-3); % Remove the padding from the image.
 
 % Calculate grayscale image properties, based on the co-occurence matrix
 Comatrix = graycomatrix(GrayscaleImage); % Calculate the gray-level co-occurence matrix.

@@ -187,7 +187,7 @@ Threshold_Global = 2;
 SelectedVariables = cell(size(VarSelModel,2),1);
 for i = 1:size(VarSelModel,2)
     SaveAs = [pwd filesep 'VariableSelection' filesep 'Results_' VarSelModel{1,i}.Method '.png'];
-    SelectedVariables{i} = VariableSelectionPlots(VarSelModel(:,i),Threshold_Individual(i),VariableNames,SaveAs);
+    SelectedVariables{i} = VariableSelectionPlots(VarSelModel(:,i),Threshold=Threshold_Individual(i),VariableNames=VariableNames,SaveAs=SaveAs);
 end
 
 % Extract the variables that were selected each time.

@@ -55,7 +55,7 @@ addOptional(p,'Threshold',DefaultThreshold,validScalar1);
 addOptional(p,'SaveAs',DefaultSaveAs,@ischar);
 addOptional(p,'VariableNames',DefaultVariableNames,@iscell);
 
-parse(p,Model,Threshold,D2orD3,varargin{:});
+parse(p,Model,varargin{:});
 
 Model = p.Results.Model;
 Threshold = p.Results.Threshold;

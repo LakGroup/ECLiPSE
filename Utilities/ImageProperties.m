@@ -61,12 +61,14 @@ SkeletonRadius = EuclideanDistImage(SkeletonImage); % Extract the shortest dista
 BranchAngles = cellfun(@(x) atan2(x(1,2) - x(end,2),x(1,1) - x(end,1)),Branches); % Calculate the angle between the first and last point of the branch.
 BranchDistance = cellfun(@(x) pdist2(x(1,:),x(end,:)),Branches); % Calculate the distance covered by the branch.
 BranchLength = cellfun(@(x) size(x,1),Branches);
+SkeletonCurvature = mean(cellfun(@(x) mean(x,'omitnan'),cellfun(@(x) Curvature(x(:,1:2)),Branches,'UniformOutput',false)),'omitnan');
 
 SkelProperties.Cloudwidth = median(SkeletonRadius)*2 * Scale; % The median width of the point cloud (expressed in pixels of the original image).
 SkelProperties.TotalLength = sum(SkeletonImage(:)) * Scale; % The total length of the skeleton image (expressed in pixels of the original image).
 SkelProperties.Intersections = NumberBranchPoints; % Save the number of intersections (i.e., branchpoints).
 SkelProperties.MeanLength = mean(BranchLength) * Scale; % The mean length of the branches (expressed in pixels of the original image).
-SkelProperties.MeanOrientation = mean(rad2deg(BranchAngles)); % The mean orientation of the branches (in degrees).
+SkelProperties.MeanOrientation = mean(abs(rad2deg(BranchAngles))); % The mean orientation of the branches (in degrees).
 SkelProperties.MeanTortuosity = mean(BranchLength./BranchDistance); % The mean tortuosity of the branches.
+SkelProperties.MeanCurvature = SkeletonCurvature; % The mean curvature of the branches.
 
 end

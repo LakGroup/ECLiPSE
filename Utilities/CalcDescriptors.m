@@ -12,7 +12,7 @@ function DescriptorsTable = CalcDescriptors(Data)
 %   Data:   The clusters on which the descriptors should be calculated.
 %           Format is a cell variable containing each cluster separately, 
 %           with each cell containing just the (x,y) coordinates in column 
-%           1 (x) and column 2 (y).
+%           1 (x) and column 2 (y). The coordinates should be in pixels.
 %
 % Output:
 %   DescriptorsTable:   A table containing all the calculated descriptors.
@@ -65,7 +65,7 @@ end
 % calculation.
 GeometricDescriptors = ["NumberLocs","MajorAxis","MinorAxis","Area","FilledArea","ConvexArea","GyrationRadius","EulerNumber","EigenvaluesRatio","Eigenentropy","Density","AreaRatio","AspectRatio","FormRatio","Rectangularity","Circularity","ConvexCircularity","Convexity","Solidity","EquivalentDiameter","FiberLength","FiberWidth","Curl","MajorAxisNormArea","MinorAxisNormArea","EllipseMajorAxis","EllipseMinorAxis","EllipseAspectRatio","EllipseRatio","EllipseEccentricity"];
 BoundaryDescriptors = ["FullPerimeter","OuterPerimeter","ConvexPerimeter","ElasticEnergy","BendingEnergy","MeanCurvature","BendingEnergyNormArea"]; 
-SkeletonDescriptors = ["SkeletonCloudWidth","SkeletonTotalLength","SkeletonIntersections","SkeletonMeanLength","SkeletonMeanOrientation","SkeletonMeanTortuosity","SkeletonTotalLengthNormArea","SkeletonIntersectionsNormArea"];
+SkeletonDescriptors = ["SkeletonCloudWidth","SkeletonTotalLength","SkeletonIntersections","SkeletonMeanLength","SkeletonMeanOrientation","SkeletonMeanTortuosity","SkeletonMeanCurvature","SkeletonTotalLengthNormArea","SkeletonIntersectionsNormArea"];
 TextureDescriptors = ["Contrast","Correlation","Energy","Entropy","Kurtosis","MeanIntensity","MeanNonZeroIntensity","RMSRoughness","Skewness"];
 HuMomentDescriptors = "HuMoment"+arrayfun(@string, 1:7);
 FractalDescriptors = ["LocalMinkowskiBouligandDim","MinkowskiSausage","HausdorffDim","BoundaryHausdorffDim","SkeletonMinkowskiSausage","SkeletonHausdorffDim"];
@@ -205,6 +205,7 @@ for i = 1:N
     DescriptorsTable(i,:).("SkeletonMeanLength") = SkelProperties.MeanLength;
     DescriptorsTable(i,:).("SkeletonMeanOrientation") = SkelProperties.MeanOrientation;
     DescriptorsTable(i,:).("SkeletonMeanTortuosity") = SkelProperties.MeanTortuosity;
+    DescriptorsTable(i,:).("SkeletonMeanCurvature") = SkelProperties.MeanCurvature;
 
     % Store the shape descriptors: texture descriptors.
     DescriptorsTable(i,:).("Contrast") = GrayscaleProperties.Contrast;

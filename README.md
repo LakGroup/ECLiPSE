@@ -1,8 +1,8 @@
 # ECLiPSE
 ECLiPSE analysis: Enhanced Classification of Localized Pointclouds by Shape Extraction
 
-The current version of the ECLiPSE software (May 08, 2023) to automatically describe and classify super-resolution fluorescence microscopy data (i.e., 2D localizations). 
-This version only contains scripts/functions to do the analysis, but a GUI version of ECLiPSE is being prepared to provide a user-friendly experience. We also plan to add classification of 3D localizations in the future!
+The current version of the ECLiPSE software (v2.0; April 10, 2024) to automatically describe and classify super-resolution fluorescence microscopy data (i.e., 2D & 3D localizations). 
+This version only contains scripts/functions to do the analysis, but a GUI version of ECLiPSE is being prepared to provide a user-friendly experience. 
 
 ## System requirements
 The files were tested in MATLAB R2022b (The MathWorks, USA), on a i7-12700H 2.30 GHz (32 GB RAM) laptop running Windows 64-bit. No errors were encountered (only some warnings sometimes related to the polyshape function of MATLAB, but these can safely be ignored). 

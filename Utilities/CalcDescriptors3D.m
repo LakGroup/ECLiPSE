@@ -1,4 +1,4 @@
-function DescriptorsTable = CalcDescriptors3D(Data,PixelSize)
+function DescriptorsTable = CalcDescriptors3D(Data)
 % -------------------------------------------------------------------------
 % Function that calculates the (spatial) descriptors of point clouds. Most
 % descriptors/features that are calculated are calculated with respect to

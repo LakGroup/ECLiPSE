@@ -20,12 +20,15 @@ To install:
   Option 2: Home tab in MATLAB -> Environment group: Set Path -> Add with Subfolders -> Select the folder in the input dialog -> Save -> Close
   ```
   - Run the 'ExampleScript.m' file
+  - Run the 'ExampleScript3D.m' file
   ```
   In the Command Window, type: ExampleScript.m
+  In the Command Window, type: ExampleScript3D.m
   ```
 A typical "installation" should not take you longer than a minute.
 
-The run time on a i7-12700H 2.30 GHz (32 GB RAM) laptop with Windows 64-bit is ~50 minutes. This is to classify the example data that is included in this software (500 clusters of 5 different biological structures).
+2D example script: The run time on a i7-12700H 2.30 GHz (32 GB RAM) laptop with Windows 64-bit is ~50 minutes. This is to classify the example data that is included in this software (500 clusters of 5 different biological structures).
+3D example script: The run time on a i7-12700H 2.30 GHz (32 GB RAM) laptop with Windows 64-bit is ~70 minutes. This is to classify the example data that is included in this software (500 clusters of 2 different biological structures).
 
 **To take full advantage of the available algorithms implemented in this software, please install the PLS Toolbox (www.eigenvector.com). A free 45-days trial is available using an academic email address during signup. We refer to their website for help on the installation of that toolbox.**
 
